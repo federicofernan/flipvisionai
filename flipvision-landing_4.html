@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlipVision AI — See the Profit Inside Every Property</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --surface2: #f0eee8;
+    --ink: #0f0e0b;
+    --ink2: #3d3c38;
+    --ink3: #7a7870;
+    --blue: #1a4fff;
+    --blue-light: #4a7fff;
+    --blue-glow: rgba(26,79,255,0.15);
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --green: #1a9c5b;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    background: rgba(247,246,242,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.35rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 12px var(--blue);
+  }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--ink2); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta {
+    background: var(--ink);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 0.875rem !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--blue) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 5% 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(26,79,255,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    border: 1px solid rgba(26,79,255,0.2);
+    border-radius: 100px;
+    padding: 6px 14px 6px 8px;
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--blue);
+    margin-bottom: 28px;
+    box-shadow: 0 2px 12px var(--blue-glow);
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--blue) 0%, #6b4fff 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--ink2); line-height: 1.6;
+    max-width: 460px; margin-bottom: 36px; font-weight: 400;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    border: none; cursor: pointer;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 0.95rem; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 4px 20px rgba(26,79,255,0.3);
+    text-decoration: none;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,79,255,0.4); background: #1540e8; }
+  .btn-secondary {
+    background: white;
+    color: var(--ink);
+    border: 1px solid rgba(0,0,0,0.12);
+    cursor: pointer;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 0.95rem; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: rgba(0,0,0,0.2); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  .stat-item {}
+  .stat-num { font-size: 1.5rem; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+  .stat-label { font-size: 0.8rem; color: var(--ink3); margin-top: 2px; }
+
+  /* ── HERO VISUAL ── */
+  .hero-right { position: relative; z-index: 2; }
+  .hero-visual {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.06);
+    background: #1a1a18;
+  }
+  .split-screen {
+    display: grid; grid-template-columns: 1fr 1fr;
+    height: 360px;
+    position: relative;
+  }
+  .split-panel {
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end;
+  }
+  .split-panel img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .split-panel-before::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.45) 100%);
+  }
+  .split-panel-after::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%);
+  }
+
+  .room-label {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px;
+    backdrop-filter: blur(8px);
+    z-index: 5;
+  }
+  .room-label-after { background: rgba(26,79,255,0.7); }
+
+  .split-divider {
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 2px; background: white; z-index: 10;
+    transform: translateX(-50%);
+  }
+  .split-icon {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 28px; height: 28px;
+    background: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    z-index: 11;
+  }
+  .split-icon svg { width: 14px; height: 14px; }
+
+  .hero-card-float {
+    position: absolute;
+    bottom: -16px; right: -16px;
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.06);
+    min-width: 180px;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .card-float-label { font-size: 0.72rem; color: var(--ink3); font-weight: 500; margin-bottom: 4px; }
+  .card-float-value { font-size: 1.5rem; font-weight: 700; color: var(--green); letter-spacing: -0.02em; }
+  .card-float-sub { font-size: 0.72rem; color: var(--ink3); margin-top: 2px; }
+  .card-float-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(26,156,91,0.1); color: var(--green);
+    border-radius: 100px; padding: 3px 8px;
+    font-size: 0.7rem; font-weight: 600; margin-top: 6px;
+  }
+
+  .hero-card-float2 {
+    position: absolute;
+    top: -16px; left: -16px;
+    background: var(--ink);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    box-shadow: var(--shadow-lg);
+    animation: float 4s ease-in-out infinite 2s;
+  }
+  .card2-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+  .card2-rooms { display: flex; gap: 6px; }
+  .room-tag {
+    background: rgba(255,255,255,0.1);
+    color: white; border-radius: 6px;
+    padding: 4px 8px; font-size: 0.68rem; font-weight: 500;
+  }
+  .room-tag.active { background: var(--blue); }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    padding: 32px 5%;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .trust-label { font-size: 0.8rem; color: var(--ink3); font-weight: 500; }
+  .trust-tags { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .trust-tag {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.82rem; font-weight: 500; color: var(--ink2);
+  }
+  .trust-icon { font-size: 0.9rem; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 5%; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 16px;
+  }
+  .section-tag::before {
+    content: '';
+    width: 16px; height: 2px; border-radius: 1px; background: var(--blue);
+  }
+  .section-h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    line-height: 1.15; letter-spacing: -0.02em; color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .section-h2 em { font-style: italic; color: var(--blue); }
+  .section-sub { font-size: 1rem; color: var(--ink2); line-height: 1.6; max-width: 520px; }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: white; }
+  .how-header { text-align: center; max-width: 600px; margin: 0 auto 64px; }
+  .how-header .section-sub { margin: 0 auto; }
+  .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; position: relative; }
+
+  .step-connector {
+    display: none;
+  }
+
+  .step-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .step-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem; font-weight: 400;
+    color: rgba(26,79,255,0.1);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .step-icon {
+    width: 48px; height: 48px;
+    background: white;
+    border: 1px solid rgba(26,79,255,0.15);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px var(--blue-glow);
+  }
+  .step-icon svg { width: 22px; height: 22px; stroke: var(--blue); fill: none; stroke-width: 1.8; }
+  .step-title { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+  .step-desc { font-size: 0.88rem; color: var(--ink2); line-height: 1.6; }
+  .step-arrow {
+    position: absolute; top: 50%; right: -20px;
+    width: 40px; height: 2px;
+    background: linear-gradient(90deg, rgba(26,79,255,0.2), rgba(26,79,255,0.4));
+    z-index: 5;
+    transform: translateY(-50%);
+  }
+  .step-arrow::after {
+    content: '';
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left: 8px solid rgba(26,79,255,0.4);
+  }
+  .step-card:last-child .step-arrow { display: none; }
+
+  /* ── DASHBOARD PREVIEW ── */
+  .preview { background: var(--bg); }
+  .preview-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+  .dashboard-shell {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .dash-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: var(--bg);
+  }
+  .dash-dots { display: flex; gap: 6px; }
+  .dash-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dash-dot:nth-child(1) { background: #ff5f57; }
+  .dash-dot:nth-child(2) { background: #febc2e; }
+  .dash-dot:nth-child(3) { background: #28c840; }
+  .dash-title { font-size: 0.82rem; font-weight: 500; color: var(--ink3); }
+  .dash-tabs {
+    display: flex; gap: 4px;
+    padding: 16px 20px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    overflow-x: auto;
+  }
+  .dash-tab {
+    padding: 8px 16px;
+    border-radius: 8px 8px 0 0;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--ink3); cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .dash-tab.active { background: white; color: var(--ink); border: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid white; margin-bottom: -1px; }
+  .dash-content { padding: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (min-width: 768px) { .dash-content { grid-template-columns: repeat(4, 1fr); } }
+
+  .reno-card {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .reno-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .reno-room { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 10px; }
+  .reno-suggestion { font-size: 0.88rem; font-weight: 500; color: var(--ink); margin-bottom: 14px; line-height: 1.4; }
+  .reno-metrics { display: flex; flex-direction: column; gap: 6px; }
+  .reno-metric { display: flex; justify-content: space-between; align-items: center; }
+  .metric-label { font-size: 0.72rem; color: var(--ink3); }
+  .metric-val { font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+  .metric-val.green { color: var(--green); }
+  .reno-bar { height: 3px; background: rgba(0,0,0,0.06); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .reno-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--blue), #6b4fff); transition: width 1s ease; }
+  .reno-score { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.7rem; font-weight: 600; }
+  .score-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+
+  /* ── BEFORE/AFTER ── */
+  .before-after { background: white; }
+  .ba-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .ba-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: var(--shadow);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .ba-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .ba-visual { height: 220px; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+  .ba-panel { position: relative; overflow: hidden; background: #1a1a18; }
+  .ba-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .ba-panel::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+  }
+
+  .ba-label {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 100px;
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+    z-index: 3;
+  }
+  .ba-label.after-label { background: rgba(26,79,255,0.8); }
+  .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: white; z-index: 5; transform: translateX(-50%); }
+  .ba-info { padding: 18px; }
+  .ba-room-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .ba-room-sub { font-size: 0.8rem; color: var(--ink3); margin-bottom: 12px; line-height: 1.4; }
+  .ba-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ba-chip {
+    background: var(--bg); border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 100px; padding: 3px 10px;
+    font-size: 0.72rem; font-weight: 500; color: var(--ink2);
+  }
+  .ba-chip.val { background: rgba(26,156,91,0.08); border-color: rgba(26,156,91,0.2); color: var(--green); }
+
+  /* ── BENEFITS ── */
+  .benefits { background: var(--ink); position: relative; overflow: hidden; }
+  .benefits-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 80% 20%, rgba(26,79,255,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(107,79,255,0.15) 0%, transparent 60%);
+  }
+  .benefits-header { text-align: center; max-width: 580px; margin: 0 auto 64px; position: relative; z-index: 2; }
+  .benefits-header .section-tag { color: rgba(255,255,255,0.5); }
+  .benefits-header .section-tag::before { background: rgba(255,255,255,0.5); }
+  .benefits-header .section-h2 { color: white; }
+  .benefits-header .section-h2 em { color: var(--blue-light); }
+  .benefits-header .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto; }
+  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; position: relative; z-index: 2; }
+  .benefit-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: transform 0.25s, background 0.25s;
+  }
+  .benefit-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.08); }
+  .benefit-icon {
+    width: 44px; height: 44px;
+    background: rgba(26,79,255,0.2);
+    border: 1px solid rgba(26,79,255,0.3);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+  }
+  .benefit-icon svg { width: 20px; height: 20px; stroke: var(--blue-light); fill: none; stroke-width: 1.8; }
+  .benefit-title { font-size: 1rem; font-weight: 600; color: white; margin-bottom: 10px; }
+  .benefit-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ── PRICING ── */
+  .pricing { background: var(--bg); }
+  .pricing-header { text-align: center; max-width: 560px; margin: 0 auto 56px; }
+  .pricing-header .section-sub { margin: 0 auto; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
+  .price-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .price-card.featured {
+    background: var(--ink);
+    border-color: var(--ink);
+    transform: scale(1.03);
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(26,79,255,0.2);
+  }
+  .price-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+  .featured-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--blue);
+    color: white; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 14px; border-radius: 100px;
+    white-space: nowrap;
+  }
+  .plan-name { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 12px; }
+  .price-card.featured .plan-name { color: rgba(255,255,255,0.5); }
+  .plan-price {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem; line-height: 1; letter-spacing: -0.02em; color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .price-card.featured .plan-price { color: white; }
+  .plan-price sup { font-size: 1.4rem; vertical-align: super; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+  .plan-period { font-size: 0.82rem; color: var(--ink3); margin-bottom: 20px; }
+  .price-card.featured .plan-period { color: rgba(255,255,255,0.4); }
+  .plan-divider { height: 1px; background: rgba(0,0,0,0.08); margin-bottom: 20px; }
+  .price-card.featured .plan-divider { background: rgba(255,255,255,0.1); }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--ink2); }
+  .price-card.featured .plan-features li { color: rgba(255,255,255,0.7); }
+  .feat-check {
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+    background: rgba(26,156,91,0.1); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feat-check svg { width: 10px; height: 10px; stroke: var(--green); fill: none; stroke-width: 2.5; }
+  .price-card.featured .feat-check { background: rgba(26,79,255,0.2); }
+  .price-card.featured .feat-check svg { stroke: var(--blue-light); }
+  .plan-cta {
+    display: block; text-align: center; text-decoration: none;
+    padding: 13px; border-radius: 100px;
+    font-size: 0.9rem; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .plan-cta-outline {
+    border: 1.5px solid rgba(0,0,0,0.15); color: var(--ink);
+  }
+  .plan-cta-outline:hover { border-color: var(--blue); color: var(--blue); }
+  .plan-cta-primary {
+    background: var(--blue); color: white;
+    box-shadow: 0 4px 16px rgba(26,79,255,0.3);
+  }
+  .plan-cta-primary:hover { background: #1540e8; box-shadow: 0 6px 24px rgba(26,79,255,0.4); }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    background: white;
+    padding: 100px 5%;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .final-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(26,79,255,0.06) 0%, transparent 60%);
+  }
+  .final-cta-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+  .final-cta h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    line-height: 1.1; letter-spacing: -0.02em; color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .final-cta h2 em { font-style: italic; color: var(--blue); }
+  .final-cta p { font-size: 1rem; color: var(--ink2); margin-bottom: 36px; line-height: 1.6; }
+  .final-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .final-note { margin-top: 20px; font-size: 0.82rem; color: var(--ink3); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 56px 5% 32px;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 48px; flex-wrap: wrap; gap: 40px;
+  }
+  .footer-brand .nav-logo { color: white; font-size: 1.2rem; }
+  .footer-tagline { font-size: 0.82rem; color: rgba(255,255,255,0.3); margin-top: 8px; max-width: 220px; line-height: 1.5; }
+  .footer-cols { display: flex; gap: 56px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 0.85rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 0.8rem; }
+  .footer-legal { display: flex; gap: 20px; }
+  .footer-legal a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; }
+  .footer-legal a:hover { color: white; }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up-d1 { transition-delay: 0.1s; }
+  .fade-up-d2 { transition-delay: 0.2s; }
+  .fade-up-d3 { transition-delay: 0.3s; }
+  .fade-up-d4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 100px 5% 60px; }
+    .hero-right { order: -1; }
+    .hero-card-float { right: 0; bottom: -8px; }
+    .hero-card-float2 { left: 0; top: -8px; }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .how-steps { grid-template-columns: 1fr; }
+    .step-arrow { display: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 5%; }
+    .hero h1 { font-size: 2.4rem; }
+    .hero-stats { gap: 20px; }
+    .dash-content { grid-template-columns: 1fr 1fr; }
+    .footer-cols { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="logo-dot"></span>
+    FlipVision AI
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#preview">Preview</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#pricing" class="nav-cta">Start Free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      AI-Powered Property Analysis
+    </div>
+    <h1>See the <em>Profit</em><br>Inside Every<br>Property</h1>
+    <p class="hero-sub">Upload photos of any home and let AI reveal the renovations that increase value — with visualizations before you spend a dollar.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Analyze a Property
+      </a>
+      <a href="#preview" class="btn-secondary">
+        See Example Report
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">$42K</div>
+        <div class="stat-label">Avg. value increase found</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2min</div>
+        <div class="stat-label">Per property analysis</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8,400+</div>
+        <div class="stat-label">Properties analyzed</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card-float2">
+      <div class="card2-label">Analyzing rooms</div>
+      <div class="card2-rooms">
+        <span class="room-tag active">Kitchen</span>
+        <span class="room-tag">Bath</span>
+        <span class="room-tag">Living</span>
+        <span class="room-tag">Ext.</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="split-screen">
+        <div class="split-panel split-panel-before">
+          <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80" alt="Old kitchen before renovation" loading="lazy">
+          <div class="room-label">Before</div>
+        </div>
+        <div class="split-panel split-panel-after">
+          <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=600&q=80" alt="Modern kitchen after renovation" loading="lazy">
+          <div class="room-label room-label-after">AI Vision</div>
+        </div>
+        <div class="split-divider">
+          <div class="split-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a4fff" stroke-width="2.5"><path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-card-float">
+      <div class="card-float-label">Estimated Value Increase</div>
+      <div class="card-float-value">+$42,000</div>
+      <div class="card-float-sub">3 renovations identified</div>
+      <div class="card-float-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        High ROI Opportunity
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-label">Trusted by</span>
+  <div class="trust-tags">
+    <div class="trust-tag"><span class="trust-icon">🏠</span> Real Estate Investors</div>
+    <div class="trust-tag"><span class="trust-icon">🔨</span> House Flippers</div>
+    <div class="trust-tag"><span class="trust-icon">🏡</span> Airbnb Hosts</div>
+    <div class="trust-tag"><span class="trust-icon">🔑</span> Realtors</div>
+    <div class="trust-tag"><span class="trust-icon">💼</span> Homeowners</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-header fade-up">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-h2">From photos to <em>profit plan</em><br>in minutes</h2>
+    <p class="section-sub">No expertise needed. Just upload, and let the AI do the heavy lifting.</p>
+  </div>
+  <div class="how-steps">
+    <div class="step-card fade-up fade-up-d1">
+      <div class="step-num">01</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <div class="step-title">Upload Property Photos</div>
+      <p class="step-desc">Drop in photos of any room — kitchen, bathroom, living area, or exterior. The more photos, the richer the analysis.</p>
+      <div class="step-arrow"></div>
+    </div>
+    <div class="step-card fade-up fade-up-d2">
+      <div class="step-num">02</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+      </div>
+      <div class="step-title">AI Analyzes Every Room</div>
+      <p class="step-desc">FlipVision scans each photo, identifies renovation opportunities, and estimates costs and value increases for each upgrade.</p>
+      <div class="step-arrow"></div>
+    </div>
+    <div class="step-card fade-up fade-up-d3">
+      <div class="step-num">03</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div class="step-title">Get Your Profit Report</div>
+      <p class="step-desc">Receive a full renovation roadmap with AI-generated visuals, estimated costs, ROI scores, and prioritized action items.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD PREVIEW -->
+<section class="preview" id="preview">
+  <div class="preview-header fade-up">
+    <div>
+      <div class="section-tag">Product Preview</div>
+      <h2 class="section-h2">Your <em>renovation dashboard</em><br>at a glance</h2>
+    </div>
+    <p class="section-sub" style="max-width: 340px;">Every room. Every opportunity. One clear view of where to invest your renovation budget.</p>
+  </div>
+  <div class="dashboard-shell fade-up fade-up-d1">
+    <div class="dash-topbar">
+      <div class="dash-dots">
+        <div class="dash-dot"></div>
+        <div class="dash-dot"></div>
+        <div class="dash-dot"></div>
+      </div>
+      <div class="dash-title">Property Dashboard — 142 Maple Street</div>
+      <div style="font-size:0.78rem;color:var(--green);font-weight:600;">● Live Analysis</div>
+    </div>
+    <div class="dash-tabs">
+      <div class="dash-tab active">All Rooms</div>
+      <div class="dash-tab">Kitchen</div>
+      <div class="dash-tab">Bathroom</div>
+      <div class="dash-tab">Living Room</div>
+      <div class="dash-tab">Exterior</div>
+    </div>
+    <div class="dash-content">
+      <div class="reno-card">
+        <div class="reno-room">🍳 Kitchen</div>
+        <div class="reno-suggestion">Replace countertops with quartz & update cabinet hardware</div>
+        <div class="reno-metrics">
+          <div class="reno-metric"><span class="metric-label">Est. Cost</span><span class="metric-val">$8,200</span></div>
+          <div class="reno-metric"><span class="metric-label">Value Gain</span><span class="metric-val green">+$18,500</span></div>
+        </div>
+        <div class="reno-bar"><div class="reno-bar-fill" style="width:88%"></div></div>
+        <div class="reno-score"><span class="score-dot"></span> ROI Score: 88/100</div>
+      </div>
+      <div class="reno-card">
+        <div class="reno-room">🛁 Bathroom</div>
+        <div class="reno-suggestion">Add walk-in shower, update fixtures & tile flooring</div>
+        <div class="reno-metrics">
+          <div class="reno-metric"><span class="metric-label">Est. Cost</span><span class="metric-val">$12,400</span></div>
+          <div class="reno-metric"><span class="metric-label">Value Gain</span><span class="metric-val green">+$22,000</span></div>
+        </div>
+        <div class="reno-bar"><div class="reno-bar-fill" style="width:76%"></div></div>
+        <div class="reno-score"><span class="score-dot"></span> ROI Score: 76/100</div>
+      </div>
+      <div class="reno-card">
+        <div class="reno-room">🛋️ Living Room</div>
+        <div class="reno-suggestion">Install hardwood floors & add recessed lighting</div>
+        <div class="reno-metrics">
+          <div class="reno-metric"><span class="metric-label">Est. Cost</span><span class="metric-val">$5,800</span></div>
+          <div class="reno-metric"><span class="metric-label">Value Gain</span><span class="metric-val green">+$11,000</span></div>
+        </div>
+        <div class="reno-bar"><div class="reno-bar-fill" style="width:82%"></div></div>
+        <div class="reno-score"><span class="score-dot"></span> ROI Score: 82/100</div>
+      </div>
+      <div class="reno-card">
+        <div class="reno-room">🏡 Exterior</div>
+        <div class="reno-suggestion">Fresh paint, new front door & landscape curb appeal</div>
+        <div class="reno-metrics">
+          <div class="reno-metric"><span class="metric-label">Est. Cost</span><span class="metric-val">$3,200</span></div>
+          <div class="reno-metric"><span class="metric-label">Value Gain</span><span class="metric-val green">+$9,500</span></div>
+        </div>
+        <div class="reno-bar"><div class="reno-bar-fill" style="width:92%"></div></div>
+        <div class="reno-score"><span class="score-dot"></span> ROI Score: 92/100</div>
+      </div>
+    </div>
+    <div style="padding:20px 24px;border-top:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div style="font-size:0.85rem;color:var(--ink3);">4 opportunities found across 4 rooms</div>
+      <div style="display:flex;gap:24px;align-items:center;">
+        <div><span style="font-size:0.78rem;color:var(--ink3)">Total Investment: </span><strong style="font-size:0.9rem;color:var(--ink)">$29,600</strong></div>
+        <div><span style="font-size:0.78rem;color:var(--ink3)">Total Value Gain: </span><strong style="font-size:0.9rem;color:var(--green)">+$61,000</strong></div>
+        <a href="#" class="btn-primary" style="padding:8px 18px;font-size:0.82rem;">Download Report</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="before-after">
+  <div class="fade-up">
+    <div class="section-tag">AI Transformations</div>
+    <h2 class="section-h2">Before meets <em>after</em><br>— visualized instantly</h2>
+    <p class="section-sub" style="margin-bottom:48px;">See exactly what each renovation could look like before committing a single dollar.</p>
+  </div>
+  <div class="ba-grid">
+    <div class="ba-card fade-up fade-up-d1">
+      <div class="ba-visual">
+        <div class="ba-panel ba-before">
+          <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&q=75" alt="Old dated kitchen before renovation" loading="lazy">
+          <div class="ba-label">Current</div>
+        </div>
+        <div class="ba-panel ba-after">
+          <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=500&q=75" alt="Modern kitchen renovation" loading="lazy">
+          <div class="ba-label after-label">AI Vision</div>
+        </div>
+        <div class="ba-divider"></div>
+      </div>
+      <div class="ba-info">
+        <div class="ba-room-title">Kitchen Renovation</div>
+        <div class="ba-room-sub">Quartz counters, shaker cabinets, stainless appliances & island addition</div>
+        <div class="ba-chips">
+          <span class="ba-chip">$8,200 cost</span>
+          <span class="ba-chip val">+$18,500 value</span>
+          <span class="ba-chip">2 weeks</span>
+        </div>
+      </div>
+    </div>
+    <div class="ba-card fade-up fade-up-d2">
+      <div class="ba-visual">
+        <div class="ba-panel ba-before">
+          <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=500&q=75" alt="Old dated bathroom before renovation" loading="lazy">
+          <div class="ba-label">Current</div>
+        </div>
+        <div class="ba-panel ba-after">
+          <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=75" alt="Modern renovated master bathroom" loading="lazy">
+          <div class="ba-label after-label">AI Vision</div>
+        </div>
+        <div class="ba-divider"></div>
+      </div>
+      <div class="ba-info">
+        <div class="ba-room-title">Master Bathroom</div>
+        <div class="ba-room-sub">Walk-in shower, floating vanity, heated floors & premium fixtures</div>
+        <div class="ba-chips">
+          <span class="ba-chip">$12,400 cost</span>
+          <span class="ba-chip val">+$22,000 value</span>
+          <span class="ba-chip">3 weeks</span>
+        </div>
+      </div>
+    </div>
+    <div class="ba-card fade-up fade-up-d3">
+      <div class="ba-visual">
+        <div class="ba-panel ba-before">
+          <img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=500&q=75" alt="Old living room before renovation" loading="lazy">
+          <div class="ba-label">Current</div>
+        </div>
+        <div class="ba-panel ba-after">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&q=75" alt="Modern living room after renovation" loading="lazy">
+          <div class="ba-label after-label">AI Vision</div>
+        </div>
+        <div class="ba-divider"></div>
+      </div>
+      <div class="ba-info">
+        <div class="ba-room-title">Living Room</div>
+        <div class="ba-room-sub">Hardwood floors, recessed lighting, fresh coat & built-in shelving</div>
+        <div class="ba-chips">
+          <span class="ba-chip">$5,800 cost</span>
+          <span class="ba-chip val">+$11,000 value</span>
+          <span class="ba-chip">1 week</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="benefits-bg"></div>
+  <div class="benefits-header fade-up">
+    <div class="section-tag">Why FlipVision</div>
+    <h2 class="section-h2">Every decision<br><em>backed by AI</em></h2>
+    <p class="section-sub">Stop guessing which renovations matter. Let data drive your investment strategy.</p>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-card fade-up fade-up-d1">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="benefit-title">Maximize Property Value</div>
+      <p class="benefit-desc">Identify the highest-ROI renovations so every dollar you spend generates multiple dollars in value.</p>
+    </div>
+    <div class="benefit-card fade-up fade-up-d2">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div class="benefit-title">Save Weeks of Research</div>
+      <p class="benefit-desc">Get contractor-grade renovation insights in under 2 minutes instead of weeks of consultations.</p>
+    </div>
+    <div class="benefit-card fade-up fade-up-d3">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      </div>
+      <div class="benefit-title">Visualize Before You Build</div>
+      <p class="benefit-desc">AI-generated images let you see the result before committing budget or talking to a contractor.</p>
+    </div>
+    <div class="benefit-card fade-up fade-up-d4">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <div class="benefit-title">Know Your Numbers</div>
+      <p class="benefit-desc">Every suggestion comes with cost estimates and projected value increases — no financial surprises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header fade-up">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-h2">Simple, <em>transparent</em> pricing</h2>
+    <p class="section-sub">Start for free. Scale as your portfolio grows.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card fade-up fade-up-d1">
+      <div class="plan-name">Free</div>
+      <div class="plan-price"><sup>$</sup>0</div>
+      <div class="plan-period">Forever free · No credit card</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>2 property analyses/month</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Room-by-room breakdown</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Basic renovation suggestions</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Cost & value estimates</li>
+      </ul>
+      <a href="#" class="plan-cta plan-cta-outline">Get Started Free</a>
+    </div>
+    <div class="price-card featured fade-up fade-up-d2">
+      <div class="featured-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>$</sup>19</div>
+      <div class="plan-period">per month · Billed monthly</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Unlimited property analyses</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>AI renovation visualizations</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Full renovation reports</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Priority support</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>PDF export</li>
+      </ul>
+      <a href="#" class="plan-cta plan-cta-primary">Start Pro Trial</a>
+    </div>
+    <div class="price-card fade-up fade-up-d3">
+      <div class="plan-name">Investor</div>
+      <div class="plan-price"><sup>$</sup>49</div>
+      <div class="plan-period">per month · Billed monthly</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Everything in Pro</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>ROI & portfolio reports</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Downloadable renovation plans</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Contractor bid templates</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Dedicated account manager</li>
+      </ul>
+      <a href="#" class="plan-cta plan-cta-outline">Start Investor Trial</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-bg"></div>
+  <div class="final-cta-inner fade-up">
+    <div class="section-tag" style="justify-content:center;margin-bottom:20px;">Ready to Start?</div>
+    <h2>Turn Any Property Into<br>an <em>Investment Opportunity</em></h2>
+    <p>Join thousands of investors, flippers, and hosts who use FlipVision AI to find profit hidden in plain sight.</p>
+    <div class="final-cta-actions">
+      <a href="#" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Start Free Analysis
+      </a>
+      <a href="#preview" class="btn-secondary">
+        See How It Works
+      </a>
+    </div>
+    <p class="final-note">Free forever · No credit card required · 2 analyses included</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <span class="logo-dot"></span>
+        FlipVision AI
+      </a>
+      <p class="footer-tagline">See the profit inside every property. AI-powered renovation intelligence.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Example Reports</a></li>
+          <li><a href="#">API Access</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Use Cases</h4>
+        <ul>
+          <li><a href="#">House Flipping</a></li>
+          <li><a href="#">Airbnb Hosting</a></li>
+          <li><a href="#">Real Estate Agents</a></li>
+          <li><a href="#">Homeowners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 FlipVision AI. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll fade-in animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) el.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Animate reno bars on scroll
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.reno-bar-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(() => { bar.style.width = w; }, 200);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.dashboard-shell').forEach(el => barObserver.observe(el));
+
+  // Dashboard tab switching
+  document.querySelectorAll('.dash-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Smooth nav scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
